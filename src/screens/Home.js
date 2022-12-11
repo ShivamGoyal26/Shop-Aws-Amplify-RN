@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import {useFocusEffect} from '@react-navigation/native';
 import {getAllProducts} from '../queries';
+import ProductItem from '../components/ProductItem';
 
 const Home = props => {
   const [userInfo, setUserInfo] = useState(null);
@@ -42,16 +43,7 @@ const Home = props => {
   }, []);
 
   const renderItem = ({item}) => {
-    return (
-      <View>
-        <Image source={{uri: item.image}} style={styles.image} />
-        <View style={{padding: 10}}>
-          <Text>{item.name}</Text>
-          <Text>Price: {item.price}</Text>
-          <Text>Last Updated: {moment(item.updatedAt).fromNow()}</Text>
-        </View>
-      </View>
-    );
+    return <ProductItem item={item} />;
   };
 
   return (
