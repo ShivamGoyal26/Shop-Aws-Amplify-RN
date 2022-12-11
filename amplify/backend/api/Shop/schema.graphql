@@ -1,0 +1,28 @@
+type Product
+  @model
+  @auth(
+    rules: [
+      # allow all authenticated users ability to create posts
+      # allow owners ability to update and delete their posts
+      # {allow: owner}
+      # allow all authenticated users to read posts
+      # {allow: private, operations: [read]}
+      # allow all guest users (not authenticated) to read posts
+      # {allow: public, operations: [read]}
+      {allow: public}
+    ]
+  ) {
+  id: ID!
+  name: String
+  description: String
+  price: Float
+  image: String
+  userID: ID! @index(name: "byUser")
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  email: String
+  phone_number: String
+  Products: [Product] @hasMany(indexName: "byUser", fields: ["id"])
+}
