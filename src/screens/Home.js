@@ -1,4 +1,4 @@
-import {Auth, Storage} from 'aws-amplify';
+import {Auth, DataStore, Storage} from 'aws-amplify';
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Button, FlatList, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -8,6 +8,7 @@ import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
 import {getAllProducts} from '../queries';
 import ProductItem from '../components/ProductItem';
+import {Product} from '../models';
 
 const Home = props => {
   const [userInfo, setUserInfo] = useState(null);
@@ -29,8 +30,10 @@ const Home = props => {
   );
 
   const getProducts = async () => {
-    const products = await API.graphql(graphqlOperation(getAllProducts));
-    setProducts(products.data.listProducts.items);
+    // const products = await API.graphql(graphqlOperation(getAllProducts));
+    // setProducts(products.data.listProducts.items);
+    const res = await DataStore.query(Product);
+    console.log('res', res);
   };
 
   const getImage = async () => {
